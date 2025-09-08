@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>In Yeon — Nosso Destino</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style.css" />
+	<meta name="theme-color" content="#0f3a2f">
+</head>
+<body>
+	<canvas id="bg-hearts" aria-hidden="true"></canvas>
+
+	<header class="site-header">
+		<div class="brand">
+			<h1 class="title-cursive">인연 (In Yeon)</h1>
+			<p class="subtitle">Amanda e Guilherme — Laços invisíveis do destino que unem almas</p>
+		</div>
+		<button id="audio-toggle" class="audio-btn" aria-label="Alternar música" title="Alternar música">
+			<svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+				<path class="icon-play" d="M8 5v14l11-7z"/>
+				<path class="icon-pause" d="M6 5h4v14H6zM14 5h4v14h-4z"/>
+			</svg>
+		</button>
+	</header>
+
+	<main class="container">
+		<section class="hero">
+			<div class="photo-frame">
+				<img src="foto3.jpg" alt="Nós dois" class="photo" />
+			</div>
+			<div class="love-quote">
+				<p>“Em qualquer vida possível, eu te encontraria e te amaria do mesmo jeito.”</p>
+				<p class="signature">— Para Amanda</p>
+			</div>
+		</section>
+
+		<section class="counter-card">
+			<h2 class="title-cursive">Nosso tempo juntos</h2>
+			<p class="since">Desde 01/03/2025</p>
+			<div id="counter" class="counter-grid" aria-live="polite" aria-atomic="true">
+				<div class="unit"><span id="years">0</span><label>Anos</label></div>
+				<div class="unit"><span id="months">0</span><label>Meses</label></div>
+				<div class="unit"><span id="days">0</span><label>Dias</label></div>
+				<div class="unit"><span id="hours">0</span><label>Horas</label></div>
+				<div class="unit"><span id="minutes">0</span><label>Min</label></div>
+				<div class="unit"><span id="seconds">0</span><label>Seg</label></div>
+			</div>
+		</section>
+	</main>
+
+	<audio id="bg-music" src="star-a-war.mp3" preload="auto" loop playsinline></audio>
+
+	<footer class="site-footer">
+		<p>Escrito pelo destino.</p>
+	</footer>
+
+	<script src="script.js"></script>
+</body>
+</html>
