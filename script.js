@@ -1,37 +1,71 @@
 // Utilidades: seleção
+
 const $ = (sel) => document.querySelector(sel);
 
 // DATA INICIAL: 01/03/2025 (formato BR → 1 de março de 2025)
 const START_DATE = new Date(2025, 2, 1, 0, 0, 0); // meses 0-index → 2 = março
+const KNOWN_DATE = new Date(2016, 1, 18, 0, 0, 0); // 18/02/2016
 
 // Música de fundo
 const audioEl = $('#bg-music');
 const audioToggleBtn = $('#audio-toggle');
 
-function tryAutoplay() {
-	if (!audioEl) return;
-	audioEl.volume = 0.9;
-	audioEl.play().then(() => {
-		audioToggleBtn.classList.remove('paused');
-	}).catch(() => {
-		// Autoplay bloqueado, iniciar em pausado
-		audioToggleBtn.classList.add('paused');
-	});
+// Não tocar música automaticamente ao carregar
+if (audioEl) {
+    audioEl.pause();
+    audioEl.currentTime = 0;
 }
 
+function setMusicEffect(active) {
+    if (!musicEffect) return;
+    if (active) {
+        musicEffect.style.display = 'block';
+        musicEffect.classList.add('active');
+        musicEffect.style.position = 'fixed';
+        musicEffect.style.top = 0;
+        musicEffect.style.left = 0;
+        musicEffect.style.width = '100vw';
+        musicEffect.style.height = '100vh';
+        musicEffect.style.zIndex = 9999;
+        musicEffect.style.pointerEvents = 'none';
+        musicEffect.style.background = 'radial-gradient(circle, rgba(120,230,196,0.25) 0%, rgba(24,165,126,0.18) 60%, rgba(10,42,34,0.01) 100%)';
+        musicEffect.style.opacity = '1';
+        document.querySelectorAll('.music-animated').forEach(el => {
+            el.classList.add('music-dance');
+        });
+    } else {
+        musicEffect.style.opacity = '0';
+        musicEffect.classList.remove('active');
+        musicEffect.style.display = 'none';
+        document.querySelectorAll('.music-animated').forEach(el => {
+            el.classList.remove('music-dance');
+        });
+    }
+}
+
+// Alterna música e efeito contínuo
 audioToggleBtn.addEventListener('click', () => {
-	if (audioEl.paused) {
-		audioEl.play();
-		audioToggleBtn.classList.remove('paused');
-	} else {
-		audioEl.pause();
-		audioToggleBtn.classList.add('paused');
-	}
+    if (audioEl.paused) {
+        audioEl.play();
+        audioToggleBtn.classList.remove('paused');
+        setMusicEffect(true);
+        document.querySelector('.icon-play').style.display = 'none';
+        document.querySelector('.icon-pause').style.display = 'block';
+    } else {
+        audioEl.pause();
+        audioToggleBtn.classList.add('paused');
+        setMusicEffect(false);
+        pararTrocaFoto();
+        document.querySelector('.icon-play').style.display = 'block';
+        document.querySelector('.icon-pause').style.display = 'none';
+    }
 });
 
 // Contador preciso (anos, meses, dias, horas, minutos, segundos)
 const ids = ['years','months','days','hours','minutes','seconds'];
 const els = Object.fromEntries(ids.map(id => [id, document.getElementById(id)]));
+const knownIds = ['known-years','known-months','known-days','known-hours','known-minutes','known-seconds'];
+const knownEls = Object.fromEntries(knownIds.map(id => [id, document.getElementById(id)]));
 
 function clampNonNegative(n) { return Math.max(0, n|0); }
 
@@ -68,14 +102,24 @@ function diffYMDHMS(from, to) {
 }
 
 function updateCounter() {
-	const now = new Date();
-	const d = diffYMDHMS(START_DATE, now);
-	els.years.textContent = d.years;
-	els.months.textContent = d.months;
-	els.days.textContent = d.days;
-	els.hours.textContent = d.hours.toString().padStart(2,'0');
-	els.minutes.textContent = d.minutes.toString().padStart(2,'0');
-	els.seconds.textContent = d.seconds.toString().padStart(2,'0');
+    const now = new Date();
+    // Tempo de namoro
+    const d = diffYMDHMS(START_DATE, now);
+    els.years.textContent = d.years;
+    els.months.textContent = d.months;
+    els.days.textContent = d.days;
+    els.hours.textContent = d.hours.toString().padStart(2,'0');
+    els.minutes.textContent = d.minutes.toString().padStart(2,'0');
+    els.seconds.textContent = d.seconds.toString().padStart(2,'0');
+
+    // Tempo que se conhecem
+    const k = diffYMDHMS(KNOWN_DATE, now);
+    knownEls['known-years'].textContent = k.years;
+    knownEls['known-months'].textContent = k.months;
+    knownEls['known-days'].textContent = k.days;
+    knownEls['known-hours'].textContent = k.hours.toString().padStart(2,'0');
+    knownEls['known-minutes'].textContent = k.minutes.toString().padStart(2,'0');
+    knownEls['known-seconds'].textContent = k.seconds.toString().padStart(2,'0');
 }
 
 // Atualização em tempo real
@@ -176,6 +220,39 @@ function draw() {
 
 requestAnimationFrame(draw);
 
+// Efeito visual global ao clicar no botão da música
+const musicEffect = document.getElementById('music-effect');
+// Efeito nas letras ao pressionar o botão da música ou quando a música começar a tocar
+function triggerMusicEffect() {
+    if (!musicEffect) return;
+    musicEffect.style.display = 'block';
+    musicEffect.classList.add('active');
+    musicEffect.style.position = 'fixed';
+    musicEffect.style.top = 0;
+    musicEffect.style.left = 0;
+    musicEffect.style.width = '100vw';
+    musicEffect.style.height = '100vh';
+    musicEffect.style.zIndex = 9999;
+    musicEffect.style.pointerEvents = 'none';
+    musicEffect.style.background = 'radial-gradient(circle, rgba(120,230,196,0.25) 0%, rgba(24,165,126,0.18) 60%, rgba(10,42,34,0.01) 100%)';
+    musicEffect.style.transition = 'opacity 0.8s';
+    musicEffect.style.opacity = '1';
+    setTimeout(() => {
+        musicEffect.style.opacity = '0';
+        setTimeout(() => {
+            musicEffect.style.display = 'none';
+            musicEffect.classList.remove('active');
+        }, 800);
+    }, 1200);
+}
+
+// Adiciona efeito também quando a música começa a tocar automaticamente
+if (audioEl) {
+    audioEl.addEventListener('play', () => {
+        triggerMusicEffect();
+    });
+}
+
 // Tenta autoplay após carregamento
 window.addEventListener('load', tryAutoplay);
 // Desbloquear em primeiro toque (iOS/Android)
@@ -184,3 +261,47 @@ document.addEventListener('click', () => {
 		try { audioEl.play(); audioToggleBtn.classList.remove('paused'); } catch {}
 	}
 }, { once: true });
+
+// Estado inicial: mostrar ícone play, esconder pause, sem efeito nas letras
+window.addEventListener('DOMContentLoaded', () => {
+    alert('O JavaScript foi carregado!');
+    document.querySelector('.icon-play').style.display = 'block';
+    document.querySelector('.icon-pause').style.display = 'none';
+    document.querySelectorAll('.music-animated').forEach(el => {
+        el.classList.remove('music-dance');
+    });
+    // Corrige ícone do botão no primeiro clique
+    audioToggleBtn.addEventListener('mousedown', () => {
+        if (audioEl.paused) {
+            document.querySelector('.icon-play').style.display = 'none';
+            document.querySelector('.icon-pause').style.display = 'block';
+        } else {
+            document.querySelector('.icon-play').style.display = 'block';
+            document.querySelector('.icon-pause').style.display = 'none';
+        }
+    });
+});
+
+// Frase e foto fixas
+function pararTrocaFotoFrase() {
+    const img = document.querySelector('.photo-frame img');
+    const frase = document.querySelector('.love-quote p.music-animated');
+    const autor = document.querySelector('.love-quote .signature');
+    if (img && frase && autor) {
+        img.src = 'foto3.jpg';
+        img.alt = 'Nós dois';
+        frase.textContent = '“Em qualquer vida possível, eu te encontraria e te amaria do mesmo jeito.”';
+        autor.textContent = '— Para Amanda';
+        img.style.border = '';
+        frase.style.background = '';
+        autor.style.background = '';
+    }
+}
+
+function pararTrocaFoto() {
+    const img = document.querySelector('.photo-frame img');
+    if (img) {
+        img.src = 'foto3.jpg';
+        img.alt = 'Nós dois';
+    }
+}

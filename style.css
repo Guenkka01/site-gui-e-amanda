@@ -1,3 +1,18 @@
+/* Efeito animado nas letras ao pressionar o botão da música */
+/* Efeito contínuo nas letras enquanto a música toca */
+/* Efeito pulsante sutil nas letras enquanto a música toca */
+/* Efeito pulsante ainda mais sutil nas letras enquanto a música toca */
+.music-animated.music-dance {
+	animation: textPulse 1.4s infinite ease-in-out;
+	color: var(--accent-2);
+	text-shadow: 0 0 8px var(--accent-2), 0 0 12px var(--accent);
+}
+
+@keyframes textPulse {
+	0% { transform: scale(1); filter: brightness(1.08); }
+	50% { transform: scale(1.018); filter: brightness(1.13); }
+	100% { transform: scale(1); filter: brightness(1.08); }
+}
 /* Tipografia base */
 :root {
 	--bg-dark: #0f3a2f;
@@ -9,6 +24,17 @@
 	--shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 	--radius: 18px;
 	--radius-sm: 12px;
+    --music-effect: radial-gradient(circle, rgba(120,230,196,0.25) 0%, rgba(24,165,126,0.18) 60%, rgba(10,42,34,0.01) 100%);
+}
+/* Efeito visual global ao clicar no botão da música */
+#music-effect.active {
+	animation: musicEffectFlash 1.2s ease;
+}
+
+@keyframes musicEffectFlash {
+	0% { opacity: 1; }
+	80% { opacity: 0.7; }
+	100% { opacity: 0; }
 }
 
 * { box-sizing: border-box; }

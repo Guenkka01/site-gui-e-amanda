@@ -15,13 +15,13 @@
 
 	<header class="site-header">
 		<div class="brand">
-			<h1 class="title-cursive">인연 (In Yeon)</h1>
-			<p class="subtitle">Amanda e Guilherme — Laços invisíveis do destino que unem almas</p>
+			<h1 class="title-cursive music-animated">인연 (In Yeon)</h1>
+			<p class="subtitle music-animated">Amanda e Guilherme — Laços invisíveis do destino que unem almas</p>
 		</div>
 		<button id="audio-toggle" class="audio-btn" aria-label="Alternar música" title="Alternar música">
 			<svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
-				<path class="icon-play" d="M8 5v14l11-7z"/>
-				<path class="icon-pause" d="M6 5h4v14H6zM14 5h4v14h-4z"/>
+				<path class="icon-play" d="M8 5v14l11-7z" style="display:block;"/>
+				<path class="icon-pause" d="M6 5h4v14H6zM14 5h4v14h-4z" style="display:none;"/>
 			</svg>
 		</button>
 	</header>
@@ -32,13 +32,13 @@
 				<img src="foto3.jpg" alt="Nós dois" class="photo" />
 			</div>
 			<div class="love-quote">
-				<p>“Em qualquer vida possível, eu te encontraria e te amaria do mesmo jeito.”</p>
-				<p class="signature">— Para Amanda</p>
+				<p class="music-animated">“Em qualquer vida possível, eu te encontraria e te amaria do mesmo jeito.”</p>
+				<p class="signature music-animated">— Para Amanda</p>
 			</div>
 		</section>
 
 		<section class="counter-card">
-			<h2 class="title-cursive">Nosso tempo juntos</h2>
+			<h2 class="title-cursive music-animated" id="title-namoro">Nosso tempo de namoro</h2>
 			<p class="since">Desde 01/03/2025</p>
 			<div id="counter" class="counter-grid" aria-live="polite" aria-atomic="true">
 				<div class="unit"><span id="years">0</span><label>Anos</label></div>
@@ -49,9 +49,25 @@
 				<div class="unit"><span id="seconds">0</span><label>Seg</label></div>
 			</div>
 		</section>
+
+		<section class="counter-card">
+			<h2 class="title-cursive music-animated" id="title-known">Tempo que nos conhecemos</h2>
+			<p class="since">Desde 18/02/2016</p>
+			<div id="counter-known" class="counter-grid" aria-live="polite" aria-atomic="true">
+				<div class="unit"><span id="known-years">0</span><label>Anos</label></div>
+				<div class="unit"><span id="known-months">0</span><label>Meses</label></div>
+				<div class="unit"><span id="known-days">0</span><label>Dias</label></div>
+				<div class="unit"><span id="known-hours">0</span><label>Horas</label></div>
+				<div class="unit"><span id="known-minutes">0</span><label>Min</label></div>
+				<div class="unit"><span id="known-seconds">0</span><label>Seg</label></div>
+			</div>
+		</section>
 	</main>
 
 	<audio id="bg-music" src="star-a-war.mp3" preload="auto" loop playsinline></audio>
+
+<!-- Efeito visual global para música -->
+<div id="music-effect" style="display:none;"></div>
 
 	<footer class="site-footer">
 		<p>Escrito pelo destino.</p>
